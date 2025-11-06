@@ -1,0 +1,20 @@
+# ---- build stage ----
+FROM node:20-alpine AS builder
+WORKDIR /frontend
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend/ .
+RUN npm run build
+
+# ---- production stage ----
+FROM node:20-alpine AS runner
+WORKDIR /frontend
+ENV NODE_ENV=production
+COPY --from=builder /frontend/.next ./.next
+COPY --from=builder /frontend/public ./public
+COPY --from=builder /frontend/package*.json ./
+RUN npm install --omit=dev
+
+EXPOSE 3000
+CMD ["npm", "start"]
+
