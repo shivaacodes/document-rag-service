@@ -34,14 +34,17 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install Bun
+        run: npm install -g bun
+
       - name: Install frontend deps and build
         working-directory: frontend
         run: |
-          npm ci
-          npm run build
+          bun install
+          bun run build
 
       - name: Lint frontend
         working-directory: frontend
         run: |
-          npm run lint || echo "lint warnings"
+          bun run lint || echo "lint warnings"
 
