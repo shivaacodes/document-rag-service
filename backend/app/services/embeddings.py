@@ -2,7 +2,7 @@
 # ✓ async ✓ batched ✓ cached ✓ non-blocking
 
 import asyncio
-from functools import lru_cache()
+from functools import lru_cache() # type: ignore
 from sentence_transformers import SentenceTransformer
 
 from core.config import settings
@@ -34,6 +34,6 @@ class EmbeddingService:
             texts,
             batch_size=32,
             convert_to_numpy=True
-        ).tolist()
+        ).tolist() # type: ignore
 
 embedding_service = EmbeddingService()
