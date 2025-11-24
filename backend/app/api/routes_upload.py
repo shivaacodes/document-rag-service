@@ -1,5 +1,5 @@
 # Accept file upload, Validate API key, Validate file size / type, Call ingestion_service.ingest(...), 
-#.., Update Prometheus counters, Return JSON respons
+#.., Update Prometheus counters, Return JSON response
 
 # thin api wrapper
 
