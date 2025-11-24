@@ -1,15 +1,11 @@
 import chromadb
-from chromadb.config import Settings
-from core.config import settings
+from ..core.config import settings
 
 class VectorStore:
     def __init__(self):
         # persistent directory for production durability
-        self.client = chromadb.Client(
-            Settings(
-                chroma_db_impl="duckdb+parquet",
-                persist_directory=settings.chroma_dir
-            )
+        self.client = chromadb.PersistentClient(
+            path=settings.chroma_dir
         )
         self.collection_name = "documents"
         self.collection = self.get_collection()
@@ -31,7 +27,6 @@ class VectorStore:
             embeddings=embeddings,
             metadatas=metadatas
         )
-        self.client.persist()
 
     def query_docs(self, query_embedding, top_k=5):
         return self.collection.query(

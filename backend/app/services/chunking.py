@@ -12,7 +12,7 @@ def chunk_text(text: str,chunk_size: int = 1200,overlap: int = 300):
         sub_tokens = tokens[start:end]
         chunk_text = enc.decode(sub_tokens)
         chunks.append({
-            "text": chunk_text
+            "text": chunk_text,
             "start_token": start,
             "end_token": end,
             "chunk_index": len(chunks)

@@ -14,4 +14,3 @@ def setup_logging():
         serialize=True,
     )
     return logger
-

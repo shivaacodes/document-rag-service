@@ -2,10 +2,10 @@
 # ✓ async ✓ batched ✓ cached ✓ non-blocking
 
 import asyncio
-from functools import lru_cache() # type: ignore
+from functools import lru_cache
 from sentence_transformers import SentenceTransformer
 
-from core.config import settings
+from ..core.config import settings
 
 class EmbeddingService:
     def __init__(self):
@@ -15,7 +15,7 @@ class EmbeddingService:
     @lru_cache(maxsize=256)
     def _cached_single(self, text: str):
         # sync helper for LRU Caching
-        return self.model.encode([text],convert_to_numpy=True)[0]
+        return self.model.encode([text],convert_to_tensor=True)[0]
 
     async def embed_texts(self, texts: list[str]):
         loop = asyncio.get_running_loop()
@@ -33,7 +33,7 @@ class EmbeddingService:
         return self.model.encode(
             texts,
             batch_size=32,
-            convert_to_numpy=True
-        ).tolist() # type: ignore
+            convert_to_tensor=True
+        ).tolist()  # type: ignore
 
 embedding_service = EmbeddingService()
