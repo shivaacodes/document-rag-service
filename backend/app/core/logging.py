@@ -1,16 +1,39 @@
-# production logs should be structured (JSON) for Grafana/Loki ingestion
-
 import logging
-from loguru import logger
+import sys
+import structlog
 
 def setup_logging():
-    logging.getLogger("uvicorn").handlers.clear()
-    logger.add(
-        "logs/app.log",
-        rotation="10 MB",
-        retention="7 days",
-        format="{time} {level} {message}",
-        level="INFO",
-        serialize=True,
+
+    timestamper = structlog.processors.TimeStamper(fmt="iso")
+
+    processors = [
+        structlog.contextvars.merge_contextvars,
+        timestamper,
+        structlog.processors.add_log_level,
+        structlog.processors.CallsiteParameterAdder(
+            parameters=[
+                structlog.processors.CallsiteParameter.FILENAME,
+                structlog.processors.CallsiteParameter.LINENO,
+                structlog.processors.CallsiteParameter.FUNC_NAME,
+            ]
+        ),
+        structlog.processors.dict_tracebacks,
+        structlog.processors.JSONRenderer(),
+    ]
+
+    logging.basicConfig(
+        format="%(message)s",
+        stream=sys.stdout,
+        level=logging.INFO,
     )
-    return logger
+
+    structlog.configure(
+        processors=processors,
+        wrapper_class=structlog.make_filtering_bound_logger(logging.INFO),
+        context_class=dict,
+        logger_factory=structlog.PrintLoggerFactory(),
+        cache_logger_on_first_use=True,
+    )
+
+    return structlog.get_logger()
+
