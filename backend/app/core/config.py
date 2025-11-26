@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     embedding_model: str = 'all-MiniLM-L6-v2'
     max_upload_mb: int = 100
     api_key: str = 'local-dev-key'
+    otel_exporter_otlp_traces_endpoint: str = 'http://localhost:4318/v1/traces'
 
 settings = Settings()
 

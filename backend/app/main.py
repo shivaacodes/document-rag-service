@@ -2,9 +2,11 @@ from fastapi import FastAPI
 from .api import routes_upload, routes_query, routes_generate, routes_health
 from .metrics.prometheus import metrics_app
 from .core.logging import setup_logging
+from .tracing import setup_tracing
 
 logger = setup_logging()
 
+tracer = setup_tracing()
 app = FastAPI(title="document-rag-service")
 
 app.include_router(routes_upload.router, prefix="/upload", tags=["upload"])
