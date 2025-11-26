@@ -7,11 +7,15 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/app
+      - ./backend/app:/app/app
     environment:
       - CHROMA_DB_PATH=/data/chroma
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://jaeger:4318/v1/traces
     depends_on:
       - chroma
+      - jaeger
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   frontend:
     build:
@@ -31,6 +35,14 @@ services:
     ports:
       - "8001:8000"
 
+  jaeger:
+    image: jaegertracing/jaeger:latest
+    container_name: document-rag-jaeger
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "4318:4318"
+      - "16686:16686"
+
 volumes:
   chroma_data:
-

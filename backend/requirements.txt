@@ -34,5 +34,11 @@ pydantic-settings==2.4.0
 python-dotenv==1.0.1
 tiktoken==0.7.0
 
+# tracing
+opentelemetry-api==1.38.0
+opentelemetry-sdk==1.38.0
+opentelemetry-exporter-otlp==1.38.0
+opentelemetry-instrumentation-fastapi==0.59b0
+opentelemetry-instrumentation-requests==0.59b0
 
-
+python-multipart
