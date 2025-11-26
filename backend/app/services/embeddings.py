@@ -10,7 +10,7 @@ from ..core.config import settings
 class EmbeddingService:
     def __init__(self):
         # load model once start-up
-        self.model = SentenceTransformer(settings.embedding_model)
+        self.model = SentenceTransformer(settings.embedding_model, tokenizer_kwargs={'clean_up_tokenization_spaces': True})
 
     @lru_cache(maxsize=256)
     def _cached_single(self, text: str):

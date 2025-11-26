@@ -5,18 +5,19 @@ import httpx
 import time
 from typing import List, Dict, Any
 import structlog
+from opentelemetry import trace
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
 MODEL_NAME = "mistral"
 
 logger = structlog.get_logger("llm")
+tracer = trace.get_tracer(__name__)
 
 
 async def generate_answer(query: str, chunks: List[Dict[str, Any]]) -> str:
     start_time = time.time()
 
     context = "\n\n".join([c["text"] for c in chunks])
-
     prompt = (
         "You are a RAG assistant. Use only the context provided."
         "\n\nContext:\n"
@@ -26,40 +27,42 @@ async def generate_answer(query: str, chunks: List[Dict[str, Any]]) -> str:
         "\n\nAnswer using only the context. If not found, respond that the information is not available."
     )
 
-    try:
-        async with httpx.AsyncClient(timeout=60) as client:
-            response = await client.post(
-                OLLAMA_URL,
-                json={
-                    "model": MODEL_NAME,
-                    "prompt": prompt,
-                    "stream": False
-                }
+    with tracer.start_as_current_span("generate_answer") as gen_span:
+
+        try:
+            async with httpx.AsyncClient(timeout=60) as client:
+                with tracer.start_as_current_span("llm_http_request"):
+                    response = await client.post(
+                        OLLAMA_URL,
+                        json={
+                            "model": MODEL_NAME,
+                            "prompt": prompt,
+                            "stream": False
+                        }
+                    )
+        except Exception as e:
+            logger.error(
+                "llm_http_error",
+                error=str(e),
+                query_len=len(query),
+                chunks=len(chunks),
+                model=MODEL_NAME,
             )
-    except Exception as e:
-        logger.error(
-            "llm_http_error",
-            error=str(e),
-            query_len=len(query),
-            chunks=len(chunks),
-            model=MODEL_NAME,
-        )
-        return "LLM error during request"
+            return "LLM error during request"
 
-    if response.status_code != 200:
-        logger.error(
-            "llm_response_error",
-            status=response.status_code,
-            body=response.text,
-            model=MODEL_NAME,
-        )
-        return "LLM error while generating answer"
+        if response.status_code != 200:
+            logger.error(
+                "llm_response_error",
+                status=response.status_code,
+                body=response.text,
+                model=MODEL_NAME,
+            )
+            return "LLM error while generating answer"
 
-    data = response.json()
-    answer = data.get("response", "").strip()
+        data = response.json()
+        answer = data.get("response", "").strip()
 
     llm_ms = (time.time() - start_time) * 1000
-
     logger.info(
         "llm_completed",
         query_len=len(query),
@@ -70,4 +73,3 @@ async def generate_answer(query: str, chunks: List[Dict[str, Any]]) -> str:
     )
 
     return answer
-
