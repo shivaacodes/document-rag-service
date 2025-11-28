@@ -9,6 +9,16 @@ logger = setup_logging()
 tracer = setup_tracing()
 app = FastAPI(title="document-rag-service")
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(routes_upload.router, prefix="/upload", tags=["upload"])
 app.include_router(routes_query.router, prefix="/api/query", tags=["query"])
 app.include_router(routes_generate.router, prefix="/api", tags=["generate"])

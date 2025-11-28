@@ -33,3 +33,11 @@ async def health_check():
         raise HTTPException(status_code=503, detail=status)
 
     return status
+
+@router.get("/debug/count")
+def debug_count():
+    try:
+        count = vectorstore.count()
+        return {"count": count}
+    except Exception as e:
+        return {"error": str(e)}

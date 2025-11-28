@@ -6,6 +6,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file='.env')
 
     chroma_dir: str = './chroma_db'
+    chroma_server_host: str = 'chroma'
+    chroma_server_http_port: int = 8000
     embedding_model: str = 'all-MiniLM-L6-v2'
     max_upload_mb: int = 100
     api_key: str = 'local-dev-key'

@@ -48,7 +48,8 @@ async def generate_answer(query: str, chunks: List[Dict[str, Any]]) -> str:
                 chunks=len(chunks),
                 model=MODEL_NAME,
             )
-            return "LLM error during request"
+            # Fallback: Return context directly
+            return f"**LLM Unavailable (Fallback Mode)**\n\nI couldn't connect to the LLM to generate an answer, but here is the relevant context I found:\n\n{context}"
 
         if response.status_code != 200:
             logger.error(
@@ -57,7 +58,7 @@ async def generate_answer(query: str, chunks: List[Dict[str, Any]]) -> str:
                 body=response.text,
                 model=MODEL_NAME,
             )
-            return "LLM error while generating answer"
+            return f"**LLM Error (Fallback Mode)**\n\nI encountered an error generating the answer, but here is the relevant context:\n\n{context}"
 
         data = response.json()
         answer = data.get("response", "").strip()
