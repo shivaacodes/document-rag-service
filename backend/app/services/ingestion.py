@@ -19,8 +19,15 @@ class IngestionService:
         else:
             raise ValueError("Unsupported file type")
 
+        # Clear existing documents to ensure fresh context
+        vectorstore.clear()
+
         # 1. chunk text
         chunks = chunk_text(text)
+        print(f"DEBUG: Generated {len(chunks)} chunks")
+        if not chunks:
+            print("DEBUG: No chunks generated! Text might be empty.")
+        
         chunk_texts = [c["text"] for c in chunks]
 
         # 2. embed chunks
