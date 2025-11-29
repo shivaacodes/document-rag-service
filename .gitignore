@@ -36,3 +36,21 @@ coverage.xml
 # Python bytecode files
 *.pyc
 __pycache__/
+
+# ChromaDB and Vector Store
+chroma_db/
+backend/chroma-db/
+backend/data/
+
+# Logs
+backend/logs/
+*.log
+
+# Frontend
+node_modules/
+.next/
+dist/
+build/
+frontend/.next/
+frontend/node_modules/
+frontend/out/
