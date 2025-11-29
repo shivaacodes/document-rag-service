@@ -1,7 +1,13 @@
+import sys
+from unittest.mock import MagicMock, AsyncMock, patch
+
+# Mock chromadb before importing app to avoid connection errors during collection
+sys.modules["chromadb"] = MagicMock()
+sys.modules["chromadb"].HttpClient = MagicMock()
+
 import pytest
 import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
-from unittest.mock import MagicMock, AsyncMock, patch
 from app.main import app
 from typing import AsyncGenerator
 from app.services.vectorstore import vectorstore as real_vectorstore
