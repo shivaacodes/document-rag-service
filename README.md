@@ -14,11 +14,11 @@ Upload PDF/TXT documents and chat with them using a local LLM (Ollama).
 - **Multi-Format Support**: Ingest PDF and TXT files with automatic text extraction and chunking.
 - **Semantic Search**: Powered by `SentenceTransformers` and `ChromaDB` for accurate context retrieval.
 - **Local LLM Integration**: Uses **Ollama** for privacy-focused, offline inference.
-- **Modern UI**: Built with **Next.js 14**, **Tailwind CSS**, and **Framer Motion** for a smooth chat experience.
+- **Modern UI**: Built with **Next.js**, **Tailwind CSS**, and **Framer Motion** for a smooth chat experience.
 - **Dockerized**: One-command setup with `docker-compose`.
 - **Robust Testing**: Comprehensive Unit, Integration, and E2E tests with 90%+ coverage.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
 - **Framework**: FastAPI
@@ -91,4 +91,4 @@ docker-compose exec backend pytest app/tests/e2e
 
 ## License
 
-Distributed under the MIT License. 
+Distributed under the MIT License.  
