@@ -12,7 +12,7 @@ export default function PDFViewer({ fileUrl }: { fileUrl?: string }) {
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [scale, setScale] = useState<number>(1.0);
 
-    // Reset page number when file changes
+    //Reset page number when file changes
     useEffect(() => {
         setPageNumber(1);
     }, [fileUrl]);

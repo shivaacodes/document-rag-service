@@ -32,7 +32,6 @@ export default function Home() {
       console.log("File uploaded successfully");
     } catch (error) {
       console.error("Upload failed", error);
-      // Optionally handle error UI here
     } finally {
       setIsUploading(false);
     }

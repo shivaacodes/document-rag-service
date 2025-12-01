@@ -22,9 +22,6 @@ export default function Header({ onFileUpload }: HeaderProps) {
 
     return (
         <header className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-black">
-            <div className="flex items-center gap-2">
-                {/* Placeholder for logo or title if needed, currently empty based on wireframe */}
-            </div>
             {onFileUpload && (
                 <>
                     <input

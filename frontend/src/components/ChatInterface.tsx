@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Send, Loader2, Bot, User } from 'lucide-react';
+import { Send, Loader2, Bot } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { queryDocument } from '@/lib/api';
 
