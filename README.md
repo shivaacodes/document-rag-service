@@ -1,4 +1,4 @@
-# Document RAG Service 🤖📄
+# Document RAG Service 
 
 A production-ready **Retrieval-Augmented Generation (RAG)** microservice built with **FastAPI**, **Next.js**, and **ChromaDB**.
 
@@ -9,14 +9,14 @@ Upload PDF/TXT documents and chat with them using a local LLM (Ollama).
 ![TypeScript](https://img.shields.io/badge/typescript-5.0-blue.svg)
 ![Docker](https://img.shields.io/badge/docker-compose-blue.svg)
 
-## ✨ Features
+## Features
 
-- **📄 Multi-Format Support**: Ingest PDF and TXT files with automatic text extraction and chunking.
-- **🔍 Semantic Search**: Powered by `SentenceTransformers` and `ChromaDB` for accurate context retrieval.
-- **🤖 Local LLM Integration**: Uses **Ollama** for privacy-focused, offline inference.
-- **⚡ Modern UI**: Built with **Next.js 14**, **Tailwind CSS**, and **Framer Motion** for a smooth chat experience.
-- **🐳 Dockerized**: One-command setup with `docker-compose`.
-- **🧪 Robust Testing**: Comprehensive Unit, Integration, and E2E tests with 90%+ coverage.
+- **Multi-Format Support**: Ingest PDF and TXT files with automatic text extraction and chunking.
+- **Semantic Search**: Powered by `SentenceTransformers` and `ChromaDB` for accurate context retrieval.
+- **Local LLM Integration**: Uses **Ollama** for privacy-focused, offline inference.
+- **Modern UI**: Built with **Next.js 14**, **Tailwind CSS**, and **Framer Motion** for a smooth chat experience.
+- **Dockerized**: One-command setup with `docker-compose`.
+- **Robust Testing**: Comprehensive Unit, Integration, and E2E tests with 90%+ coverage.
 
 ## 🛠️ Tech Stack
 
@@ -33,7 +33,7 @@ Upload PDF/TXT documents and chat with them using a local LLM (Ollama).
 - **State**: React Hooks
 - **PDF Viewer**: `react-pdf`
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - [Docker](https://www.docker.com/) & Docker Compose
@@ -56,7 +56,7 @@ Upload PDF/TXT documents and chat with them using a local LLM (Ollama).
    - Frontend: `http://localhost:3000`
    - Backend API: `http://localhost:8000/docs`
 
-## 🧪 Running Tests
+## Running Tests
 
 The project includes a robust test suite running inside Docker.
 
@@ -70,7 +70,7 @@ docker-compose exec backend pytest app/tests/integration
 docker-compose exec backend pytest app/tests/e2e
 ```
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 ├── backend/             # FastAPI application
@@ -89,16 +89,6 @@ docker-compose exec backend pytest app/tests/e2e
 └── docker-compose.yml   # Orchestration
 ```
 
-## 🤝 Contributing
+## License
 
-Contributions are welcome! Please read `CONTRIBUTING.md` (coming soon) for details.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. 
